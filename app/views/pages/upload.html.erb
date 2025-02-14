@@ -11,8 +11,14 @@
     <% end %>
   <% else %>
     <p>To-do: make a form based on DB to map headers</p>
-    <% params[:file_headers].each do |h| %>
-      <p><%= h %></p>
+    <%= form_with url:mapped_file_path do |f|  %>
+      <% @movie_headers.each do |k, v| %>
+        <p>
+          <strong><%= f.label k %></strong><br>
+          <%= f.select v, @uploaded_headers %>
+        </p>
+      <% end %>
+      <%= f.submit "save mapping", class:"btn btn-primary"%>
     <% end %>
   <% end %>
 </div>
