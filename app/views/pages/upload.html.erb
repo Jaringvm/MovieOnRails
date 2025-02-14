@@ -1,0 +1,15 @@
+<div class="container mt-4">
+  <h1>Upload CSV</h1>
+
+  <% if $file.nil? %>
+    <%= form_with(url: import_file_path, local: true, multipart: true) do |form| %>
+      <div class="mb-3">
+        <%= form.label :file, "Choose CSV file", class: "form-label" %>
+        <%= form.file_field :file, class: "form-control", accept: ".csv" %>
+      </div>
+      <%= form.submit "Upload CSV", class: "btn btn-primary" %>
+    <% end %>
+  <% else %>
+    <p>To-do: make an form based on DB to map headers</p>
+  <% end %>
+</div>
