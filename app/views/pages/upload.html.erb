@@ -8,6 +8,7 @@
         <%= form.file_field :file, class: "form-control", accept: ".csv" %>
       </div>
       <%= form.submit "Upload CSV", class: "btn btn-primary" %>
+      <p>To-do: only allow csv</p>
     <% end %>
   <% else %>
     <p>To-do: make an form based on DB to map headers</p>
