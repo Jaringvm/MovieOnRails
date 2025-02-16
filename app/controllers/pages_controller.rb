@@ -16,7 +16,18 @@ class PagesController < ApplicationController
       @movie_headers.map { |header| [header, header] }.to_h
       @location_headers.map { |header| [header, header] }.to_h
       @actor_headers.map { |header| [header, header] }.to_h
-      @uploaded_headers = params[:file_headers]
+
+      @arr = {
+        "movies": @movie_headers,
+        "locations": @location_headers,
+        "actors": @actor_headers
+      }
+
+      if params[:file_headers].length == 1
+        @uploaded_headers = params[:file_headers][0].split(";")
+      else
+        @uploaded_headers = params[:file_headers]
+      end
     end
   end
 

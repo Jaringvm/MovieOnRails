@@ -1,7 +1,8 @@
 <div class="container mt-4">
-  <h1>Upload CSV</h1>
+
 
   <% if params[:submitted].nil? %>
+    <h1>Upload CSV</h1>
     <%= form_with(url: import_file_path, local: true, multipart: true) do |form| %>
       <div class="mb-3">
         <%= form.label :file, "Choose CSV file", class: "form-label" %>
@@ -10,15 +11,24 @@
       <%= form.submit "Upload CSV", class: "btn btn-primary" %>
     <% end %>
   <% else %>
-    <p>To-do: make a form based on DB to map headers</p>
-    <%= form_with url:mapped_file_path do |f|  %>
-      <% @movie_headers.each do |k, v| %>
-        <p>
-          <strong><%= f.label k %></strong><br>
-          <%= f.select v, @uploaded_headers %>
-        </p>
+    <div class="container text-center">
+      <%= form_with url:mapped_file_path do |f|  %>
+        <h1 class="mb-5">Map the layout of your csv to our platform.</h1>
+        <% @arr.each do |key, values| %>
+          <div class="d-inline-block align-top me-5 ms-5">
+            <h3><%= key %></h3>
+            <% values.each do |k, v| %>
+              <p>
+                <strong><%= f.label k %></strong><br>
+                <%= f.select v, @uploaded_headers %>
+              </p>
+            <% end %>
+         </div>
+        <% end  %>
+        <div class="w-100 d-flex justify-content-center">
+          <%= f.submit "save mapping", class:"btn btn-primary mt-2 "%>
+        </div>
       <% end %>
-      <%= f.submit "save mapping", class:"btn btn-primary"%>
-    <% end %>
+    </div>
   <% end %>
 </div>
