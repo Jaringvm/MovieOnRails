@@ -36,7 +36,7 @@ class PagesController < ApplicationController
   end
   def import_file
     require 'csv'
-    if File.extname(params[:file].path) == '.csv'
+    if params[:file] and File.extname(params[:file].path) == '.csv'
       file = params[:file].path
 
       headers = CSV.read(file, headers: true).headers
