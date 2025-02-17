@@ -12,21 +12,21 @@
     <% end %>
   <% else %>
     <div class="container text-center">
-      <%= form_with url:mapped_file_path do |f|  %>
+      <%= form_with(url: mapped_file_path, method: :post, local: true) do |f| %>
         <h1 class="mb-5">Map the layout of your csv to our platform.</h1>
-        <% @arr.each do |key, values| %>
+        <% @arr.each do |model, columns| %>
           <div class="d-inline-block align-top me-5 ms-5">
-            <h3><%= key %></h3>
-            <% values.each do |k, v| %>
+            <h3><%= model %></h3>
+            <% columns.each do |column| %>
               <p>
-                <strong><%= f.label k %></strong><br>
-                <%= f.select v, @uploaded_headers %>
+                <strong><%= f.label column %></strong><br>
+                <%= f.select "#{model}[#{column}]", @uploaded_headers, { include_blank: "Select column" } %>
               </p>
             <% end %>
-         </div>
-        <% end  %>
+          </div>
+        <% end %>
         <div class="w-100 d-flex justify-content-center">
-          <%= f.submit "save mapping", class:"btn btn-primary mt-2 "%>
+          <%= f.submit "Save mapping", class: "btn btn-primary mt-2" %>
         </div>
       <% end %>
     </div>

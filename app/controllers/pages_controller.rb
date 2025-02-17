@@ -32,6 +32,7 @@ class PagesController < ApplicationController
   end
 
   def mapped_file
+    byebug
 
   end
   def import_file
