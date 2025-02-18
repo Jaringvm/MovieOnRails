@@ -4,10 +4,8 @@ class UploadsController < ApplicationController
       @arr = {
         "movies": (Movie.column_names - %W[id]).map { |header| [header, header] }.to_h,
         "locations": (Location.column_names - %W[id]).map { |header| [header, header] }.to_h,
-        "actors": (Location.column_names - %W[id]).map { |header| [header, header] }.to_h,
+        "actors": (Actor.column_names - %W[id]).map { |header| [header, header] }.to_h,
       }
-
-
       if params[:file_headers].length == 1
         @uploaded_headers = params[:file_headers][0].split(";")
       else
