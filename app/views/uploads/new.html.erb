@@ -17,10 +17,10 @@
         <% @arr.each do |model, columns| %>
           <div class="d-inline-block align-top me-5 ms-5">
             <h3><%= model %></h3>
-            <% columns.each do |column| %>
+            <% columns.each do |key, value| %>
               <p>
-                <strong><%= f.label column %></strong><br>
-                <%= f.select "#{model}[#{column}]", @uploaded_headers, { include_blank: "Select column" } %>
+                <strong><%= f.label key %></strong><br>
+                <%= f.select "#{model}[#{key}]", @uploaded_headers, { include_blank: "Select column" } %>
               </p>
             <% end %>
           </div>
