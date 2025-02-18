@@ -17,7 +17,7 @@
         <% @arr.each do |model, columns| %>
           <div class="d-inline-block align-top me-5 ms-5">
             <h3><%= model %></h3>
-            <% columns.each do |key, value| %>
+            <% columns.each do |key, _| %>
               <p>
                 <strong><%= f.label key %></strong><br>
                 <%= f.select "#{model}[#{key}]", @uploaded_headers, { include_blank: "Select column" } %>

@@ -39,7 +39,8 @@ class UploadsController < ApplicationController
       movie.locations << location unless movie.locations.include?(location)
     end
 
-    redirect_to new_upload_path
+    flash[:notice] = "Successfully uploaded new movie data."
+    redirect_to root_path
   end
 
   def import_file
