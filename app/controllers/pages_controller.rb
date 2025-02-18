@@ -32,7 +32,32 @@ class PagesController < ApplicationController
   end
 
   def mapped_file
-    byebug
+    puts params
+    movies = params["movies"]
+    locations = params["locations"]
+    actors = params["actors"]
+
+    $csv.each do |row|
+      actor = Actor.find_or_create_by!(name: row[actors["name"]])
+      location = Location.find_or_create_by!(name: row[locations["name"]])
+
+      movie_id = Movie.upsert(
+        {
+          name: row[movies["name"]],
+          description: row[movies["description"]],
+          year: row[movies["year"]],
+          director: row[movies["director"]]
+        },
+        unique_by: :name
+      )
+
+      movie = Movie.find_by(id: movie_id[0]["id"])
+
+      movie.actors << actor unless movie.actors.include?(actor)
+      movie.locations << location unless movie.locations.include?(location)
+
+    end
+
 
   end
   def import_file
@@ -40,7 +65,8 @@ class PagesController < ApplicationController
     if params[:file] and File.extname(params[:file].path) == '.csv'
       file = params[:file].path
 
-      headers = CSV.read(file, headers: true).headers
+      $csv = CSV.read(file, headers: true)
+      headers = $csv.headers
       puts headers
       redirect_to upload_path(submitted: true, file_headers: headers)
     else
