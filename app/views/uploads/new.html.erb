@@ -1,14 +1,16 @@
 <div class="container mt-4">
-
-
   <% if params[:submitted].nil? %>
     <h1>Upload CSV</h1>
     <%= form_with(url: import_file_uploads_path, local: true, multipart: true) do |form| %>
       <div class="mb-3">
+        <label class="form-label end">What kind of data do you want to upload?</label>
+        <%= form.select :data_type, %W[Movies Reviews], { include_blank: "Select type"}, { class: "form-select w-25 mb-3" }%>
         <%= form.label :file, "Choose CSV file", class: "form-label" %>
         <%= form.file_field :file, class: "form-control", accept: ".csv" %>
       </div>
-      <%= form.submit "Upload CSV", class: "btn btn-primary" %>
+      <div class="text-end">
+        <%= form.submit "Upload CSV", class: "btn btn-primary " %>
+      </div>
     <% end %>
   <% else %>
     <div class="container text-center">
@@ -20,7 +22,7 @@
             <% columns.each do |key, _| %>
               <p>
                 <strong><%= f.label key %></strong><br>
-                <%= f.select "#{model}[#{key}]", @uploaded_headers, { include_blank: "Select column" } %>
+                <%= f.select "#{model}[#{key}]", @uploaded_headers, { include_blank: "Select column" }, { class: "form-select" } %>
               </p>
             <% end %>
           </div>
