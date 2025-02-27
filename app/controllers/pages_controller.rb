@@ -7,6 +7,7 @@ class PagesController < ApplicationController
   end
 
   def upload
+    redirect_to new_upload_path
   end
 
   def about
