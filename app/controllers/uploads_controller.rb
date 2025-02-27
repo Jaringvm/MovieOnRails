@@ -68,7 +68,7 @@ class UploadsController < ApplicationController
       end
     else
       flash["error"] = "missing required fields"
-      render :new, status: :unprocessable_entity
+      render :new, status: 500
     end
     flash[:notice] = "Successfully uploaded new movie data."
     redirect_to root_path
