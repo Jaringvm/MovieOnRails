@@ -9,7 +9,8 @@ class UploadsController < ApplicationController
         }
       elsif params[:dataType] == "Reviews"
         @arr = {
-          "reviews": (Review.column_names - %W[id]).map { |header| [header, header] }.to_h
+          "reviews": (Review.column_names - %W[id]).map { |header| [header, header] }.to_h,
+          "users": (User.column_names - %W[id]).map { |header| [header, header] }.to_h,
         }
       else
         flash[:error] = "Please pick between the provided data types."
@@ -27,19 +28,23 @@ class UploadsController < ApplicationController
   def create
     if params["reviews"]
       reviews = params["reviews"]
+      users = params["users"]
       $csv.each do |row|
-        movie = Movie.find_or_create_by!(name: row[reviews["name"]])
-        puts "the data ", movie
-        puts "the params ", params
+        movie = Movie.find_or_create_by!(name: row[reviews["movie_id"]])
+        user = User.find_or_create_by!(name: row[users["name"]])
+
         review_id = Review.upsert(
           {
-            name: row[reviews["name"]],
             rating: row[reviews["rating"]],
             content: row[reviews["content"]],
-            movie_id: movie["id"]
+            movie_id: movie.id
           },
-          unique_by: :name
+          returning: %w[id]
         )
+
+        review = Review.find_by(id: review_id[0]["id"])
+
+        review.users << user unless review.users.include?(user)
       end
 
     elsif params["movies"]
@@ -49,7 +54,7 @@ class UploadsController < ApplicationController
 
       $csv.each do |row|
         actor = Actor.find_or_create_by!(name: row[actors["name"]])
-        location = Location.find_or_create_by!(name: row[locations["name"]])
+        location = Location.find_or_create_by!(city: row[locations["city"]], country: row[locations["country"]])
 
         movie_id = Movie.upsert(
           {

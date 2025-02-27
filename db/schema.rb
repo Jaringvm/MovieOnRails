@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_27_124135) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_27_140620) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -26,7 +26,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_124135) do
   end
 
   create_table "locations", force: :cascade do |t|
-    t.string "name"
+    t.string "city"
+    t.string "country"
   end
 
   create_table "locations_movies", id: false, force: :cascade do |t|
@@ -45,12 +46,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_124135) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.string "name"
     t.integer "rating"
     t.text "content"
     t.bigint "movie_id", null: false
     t.index ["movie_id"], name: "index_reviews_on_movie_id"
-    t.index ["name"], name: "index_reviews_on_name", unique: true
+  end
+
+  create_table "reviews_users", id: false, force: :cascade do |t|
+    t.bigint "review_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["review_id", "user_id"], name: "index_reviews_users_on_review_id_and_user_id", unique: true
+    t.index ["user_id", "review_id"], name: "index_reviews_users_on_user_id_and_review_id", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
   end
 
   add_foreign_key "reviews", "movies"
