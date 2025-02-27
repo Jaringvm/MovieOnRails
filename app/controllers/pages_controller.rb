@@ -4,6 +4,8 @@ class PagesController < ApplicationController
   end
 
   def overview
+    @movie_columns = Movie.column_names - %W[id]
+    @movies = Movie.all
   end
 
   def upload
