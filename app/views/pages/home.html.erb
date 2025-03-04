@@ -19,7 +19,7 @@
             </div>
             <div class="rating d-flex align-items-center">★ <%= movie.total_rating %></div>
           </div>
-          <div class="movie-description flex-grow-1">
+          <div class="flex-grow-1">
             <p><%= movie.description %></p>
           </div>
           <div class="movie-footer d-flex flex-column align-items-start">
@@ -49,12 +49,12 @@
       <% if @page.to_i > 1 %>
         <%= link_to "←", root_path(page: @page.to_i - 1), class: "button" %>
       <% else %>
-        <button disabled>←</button>
+        <button class="button" disabled>←</button>
       <% end %>
 
       <% (1..@total_pages).each do |page_num| %>
         <% if page_num == @page.to_i %>
-          <button class="active"><%= page_num %></button>
+          <button class="button active"><%= page_num %></button>
         <% else %>
           <%= link_to page_num, root_path(page: page_num), class: "button" %>
         <% end %>
@@ -63,7 +63,7 @@
       <% if @page.to_i < @total_pages %>
         <%= link_to "→", root_path(page: @page.to_i + 1), class: "button" %>
       <% else %>
-        <button disabled>→</button>
+        <button class="button" disabled>→</button>
       <% end %>
     </div>
   </main>

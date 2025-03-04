@@ -142,9 +142,7 @@ main {
     font-weight: bold;
 }
 
-.movie-description {
-    margin-bottom: 1.5rem;
-}
+
 
 .movie-footer {
     border-top: 1px solid #eee;
@@ -189,7 +187,7 @@ main {
     text-decoration: underline;
 }
 
-.pagination button {
+.pagination .button {
     background: var(--card-bg);
     border: 1px solid #ddd;
     padding: 0.7rem 1rem;
@@ -197,15 +195,16 @@ main {
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
+    text-decoration: none;
 }
 
-.pagination button.active {
+.pagination .button.active {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
 }
 
-.pagination button:hover:not(.active) {
+.pagination .button:hover:not(.active) {
     background-color: var(--hover-color);
 }
 
