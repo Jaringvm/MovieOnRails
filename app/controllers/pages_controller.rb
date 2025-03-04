@@ -7,6 +7,13 @@ class PagesController < ApplicationController
                                 .select('movies.*, ROUND(AVG(reviews.rating), 1) as total_rating')
                                 .group('movies.id')
                                 .order('total_rating DESC')
+                                .yield_self do |query|
+                                  if params["search"].present?
+                                    query.joins(:actors).where("actors.name ILIKE ?", "%#{params["search"]}%")
+                                  else
+                                    query
+                                  end
+                                end
 
     @total_movies = @movies_with_ratings.length || 0
     @total_pages = (@total_movies.to_f / @per_page).ceil
