@@ -14,12 +14,13 @@ namespace :import do
         actor = Actor.find_or_create_by!(name: row["Actor"])
         location = Location.find_or_create_by!(city: row["Filming location"], country: row["Country"])
 
-        movie = Movie.find_or_create_by!(
-          name: row["Movie"],
+        movie = Movie.where(name: row["Movie"]).first_or_initialize
+        movie.assign_attributes(
           description: row["Description"],
           year: row["Year"]&.to_i,
           director: row["Director"]
         )
+        movie.save!
 
 
         movie.actors << actor unless movie.actors.include?(actor)
@@ -50,15 +51,18 @@ namespace :import do
       parsed_csv = CSV.parse(File.read(file_path), headers: true)
 
       parsed_csv.each do |row|
-        movie = Movie.find_or_create_by!(name: row["Movie"])
-        user = User.find_or_create_by!(name: row["User"])
-        review = Review.create(
-          rating: row["Stars"],
-          content: row["Review"],
-          movie_id: movie.id
-        )
-
-        review.users << user unless review.users.include?(user)
+        movie = Movie.find_by(name: row["Movie"])
+        if movie
+          user = User.find_or_create_by!(name: row["User"])
+          review = movie.reviews.create!(
+            rating: row["Stars"],
+            content: row["Review"],
+            user: user
+          )
+          puts "Successfully imported review for movie: #{movie.name}"
+        else
+          puts "Skipping review: Movie '#{row["Movie"]}' not found in the database."
+        end
 
 
         if review.save
