@@ -2,8 +2,8 @@
   <header class="d-flex justify-content-between align-items-center">
     <div class="logo">Movies<span>OnRails</span></div>
     <div class="search-container d-flex flex-grow-1 mx-4" style="max-width: 40%;">
-      <input type="text" placeholder="Search for Actor...">
-      <button>🔍</button>
+      <input type="text" placeholder="Search for an Actor...">
+      <%= link_to "🔍", root_path, class:"btn search-btn"%>
     </div>
     <%= link_to "Import data", upload_path, class:"btn upload-btn" %>
   </header>
