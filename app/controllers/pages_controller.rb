@@ -1,8 +1,14 @@
 class PagesController < ApplicationController
+  # Queries all the movies sorted by average rating.
+  # Gives the option to search for movies based on the actors.
+  # @param :page [String] Holds the current page number.
+  # @param 'search' [String] Input for searching for a specific actor.
   def home
     @page = params[:page].to_i > 0 ? params[:page].to_i : 1
     @per_page = 5
 
+    # Retrieves all movies ordered by rating.
+    # (optional) search by actor if search param is given.
     @movies_with_ratings = Movie.left_joins(:reviews)
                                 .select('movies.*, ROUND(AVG(reviews.rating), 1) as total_rating')
                                 .group('movies.id')
@@ -16,11 +22,12 @@ class PagesController < ApplicationController
                                 end
 
     @total_movies = @movies_with_ratings.length || 0
-    @total_pages = (@total_movies.to_f / @per_page).ceil
+    @total_pages = (@total_movies / @per_page).ceil
 
     @movies = @movies_with_ratings.limit(@per_page).offset((@page.to_i - 1) * @per_page)
   end
 
+  # Redirect to the upload form.
   def upload
     redirect_to new_upload_path
   end
