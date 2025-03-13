@@ -26,9 +26,4 @@ class PagesController < ApplicationController
 
     @movies = @movies_with_ratings.limit(@per_page).offset((@page.to_i - 1) * @per_page)
   end
-
-  # Redirect to the upload form.
-  def upload
-    redirect_to new_upload_path
-  end
 end
