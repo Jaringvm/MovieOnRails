@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "pages#home"
+  root "movies#index"
 
   get :upload, to: "uploads#new"
 

@@ -1,9 +1,9 @@
-class PagesController < ApplicationController
+class MoviesController < ApplicationController
   # Queries all the movies sorted by average rating.
   # Gives the option to search for movies based on the actors.
   # @param :page [String] Holds the current page number.
   # @param 'search' [String] Input for searching for a specific actor.
-  def home
+  def index
     @page = params[:page].to_i > 0 ? params[:page].to_i : 1
     @per_page = 5
 
