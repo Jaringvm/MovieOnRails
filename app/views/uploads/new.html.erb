@@ -16,7 +16,7 @@
     <div class="container text-center">
       <%= form_with(url: uploads_path, method: :post, local: true) do |f| %>
         <h1 class="mb-5">Map the layout of your csv to our platform.</h1>
-        <% @arr.each do |model, columns| %>
+        <% @db_structure.each do |model, columns| %>
           <div class="d-inline-block align-top me-5 ms-5">
             <h3><%= model %></h3>
             <% columns.each do |key, _| %>

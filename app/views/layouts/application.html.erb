@@ -25,9 +25,9 @@
   </head>
 
   <body>
+    <%= yield %>
     <% flash.each do |key, msg| %>
       <%= msg %>
     <% end %>
-    <%= yield %>
   </body>
 </html>
