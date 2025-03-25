@@ -64,4 +64,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "byebug", "~> 11.1"
+gem "byebug", "~> 12.0"
